@@ -6,7 +6,7 @@ import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 
 const NavBar = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar>
         <Box
           component={Link}
