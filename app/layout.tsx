@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeRegistry>
           <NavBar/>
-          <Container component="main" sx={{ mt: 10 , mb: 4 }}>
+          <Container component="main" sx={{ mt: 5 , mb: 4 }}>
             {children}
           </Container>
         </ThemeRegistry>
