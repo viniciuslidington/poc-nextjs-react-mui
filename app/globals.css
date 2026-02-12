@@ -40,3 +40,13 @@ a {
     color-scheme: dark;
   }
 }
+
+main {
+  padding: 2rem;
+}
+
+
+section.app-section {
+  text-align: center;
+  color: rgb(0, 0, 0) ;
+}
