@@ -6,6 +6,37 @@ export interface Character {
   species:string;
 }
 
+export interface CharacterApi {
+  id: number;
+  name: string;
+  status: string; // Poderia ser 'Alive' | 'Dead' | 'unknown' para ser mais estrito
+  species: string;
+  type: string;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  image: string;
+  episode: string[]; // Array de strings (URLs)
+  url: string;
+  created: string;
+}
+
+export interface ApiResponse {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  },
+  results: CharacterApi[],
+}
+
 export const mockCharacters: Character[] = [
   {
     id: 1,

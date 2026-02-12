@@ -1,9 +1,9 @@
 "use client"
 
-import { Character, mockCharacters } from '../lib/character';
+import { Character, mockCharacters } from '../types/character';
 import Carousel from 'react-material-ui-carousel';
 import { Box, Typography} from '@mui/material';
-import CardCharacter from './CardCharacter';
+import CardCharacterCarrossel from './CardCharacter';
 
 
 function Carrossel() {
@@ -20,7 +20,7 @@ function Carrossel() {
       >
         {mockCharacters.map((character:Character)=>{
           return(
-            <CardCharacter key={character.id} item={character}/>
+            <CardCharacterCarrossel key={character.id} item={character}/>
           )
 
         })}

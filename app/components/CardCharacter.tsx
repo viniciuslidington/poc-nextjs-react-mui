@@ -1,9 +1,9 @@
 'use client'
 
 import { Box, Card, CardMedia, Typography, Button } from "@mui/material"
-import { Character } from "../lib/character"
+import { Character } from "../types/character"
 
-const CardCharacter = ({item}:{item:Character}) => {
+const CardCharacterCarrossel = ({item}:{item:Character}) => {
   return (
     <Card
       sx={{position:'relative', borderRadius:4, boxShadow:3, height:700}}
@@ -46,4 +46,4 @@ const CardCharacter = ({item}:{item:Character}) => {
   )
 }
 
-export default CardCharacter
+export default CardCharacterCarrossel
