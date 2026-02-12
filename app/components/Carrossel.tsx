@@ -6,20 +6,19 @@ import { Box, Typography} from '@mui/material';
 import CardCharacter from './CardCharacter';
 
 
-
 function Carrossel() {
   return(
     <Box sx={{maxWidth:800, width:'100%', margin:'0 auto'}}>
-      <Typography variant='h5' sx={{ mb:2, fontWeight:'bold', textAlign:'center'}}>
+      <Typography variant='h5' color='secondary' sx={{ mb:2, fontWeight:'bold', textAlign:'center'}}>
         Characters
       </Typography>
       <Carousel
-        animation='slide'
-        indicators={true}
+        animation='fade'
+        indicators={false}
         navButtonsAlwaysVisible={true}
         interval={5000}
       >
-        {mockCharacters.map((character)=>{
+        {mockCharacters.map((character:Character)=>{
           return(
             <CardCharacter key={character.id} item={character}/>
           )

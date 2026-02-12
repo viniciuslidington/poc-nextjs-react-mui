@@ -6,11 +6,11 @@ import { Character } from "../lib/character"
 const CardCharacter = ({item}:{item:Character}) => {
   return (
     <Card
-      sx={{position:'relative', borderRadius:4, boxShadow:3, height:400}}
+      sx={{position:'relative', borderRadius:4, boxShadow:3, height:700}}
     >
       <CardMedia
         component='img'
-        height="100%"
+        height="140%"
         image={item.image}
         alt={item.name}
         sx={{objectFit:'cover'}}
