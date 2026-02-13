@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import Carrossel from "./components/Carrossel";
 
 export default function Home() {
@@ -29,8 +29,18 @@ export default function Home() {
         </Typography>
 
       </Stack>
-      
       <Carrossel/>
+      <Stack spacing={1} sx={{textAlign:'center'}}>
+        <Typography variant="h5" component="h2" color="primary">
+          Dive into the Multiverse!
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Discover your favorite characters and their adventures across dimensions.
+        </Typography>
+        <Button variant="contained" color="primary" href="/characters">
+          Explore Characters
+        </Button>
+      </Stack>
     </Stack>
   );
 }

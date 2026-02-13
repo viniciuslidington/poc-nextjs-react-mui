@@ -1,15 +1,15 @@
 "use client"
 
-import { Character, mockCharacters } from '../lib/character';
+import { Character, mockCharacters } from '../types/character';
 import Carousel from 'react-material-ui-carousel';
 import { Box, Typography} from '@mui/material';
-import CardCharacter from './CardCharacter';
+import CardCharacterCarrossel from './CardCharacter';
 
 
 function Carrossel() {
   return(
     <Box sx={{maxWidth:800, width:'100%', margin:'0 auto'}}>
-      <Typography variant='h5' color='secondary' sx={{ mb:2, fontWeight:'bold', textAlign:'center'}}>
+      <Typography variant='h5' color='primary' sx={{ mb:2, fontWeight:'bold', textAlign:'center'}}>
         Characters
       </Typography>
       <Carousel
@@ -20,7 +20,7 @@ function Carrossel() {
       >
         {mockCharacters.map((character:Character)=>{
           return(
-            <CardCharacter key={character.id} item={character}/>
+            <CardCharacterCarrossel key={character.id} item={character}/>
           )
 
         })}
