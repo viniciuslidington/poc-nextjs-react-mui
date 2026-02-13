@@ -10,7 +10,7 @@ const CardCharacterCarrossel = ({item}:{item:Character}) => {
     >
       <CardMedia
         component='img'
-        height="140%"
+        height="100%"
         image={item.image}
         alt={item.name}
         sx={{objectFit:'cover'}}
@@ -39,7 +39,7 @@ const CardCharacterCarrossel = ({item}:{item:Character}) => {
           color="primary"
           size="large"
         >
-          Ver Detalhes
+          See Details
         </Button>
       </Box>
     </Card>
