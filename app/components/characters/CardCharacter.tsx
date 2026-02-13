@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Card, CardMedia, Typography, Button } from "@mui/material"
-import { Character } from "../types/character"
+import { Character } from "../../types/character"
 
 const CardCharacterCarrossel = ({item}:{item:Character}) => {
   return (
