@@ -1,9 +1,9 @@
 "use client"
 
-import { Character, mockCharacters } from '../types/character';
+import { Character, mockCharacters } from '../../types/character';
 import Carousel from 'react-material-ui-carousel';
 import { Box, Typography} from '@mui/material';
-import CardCharacterCarrossel from './CardCharacter';
+import CardCharacterCarrossel from '../characters/CardCharacter';
 
 
 function Carrossel() {

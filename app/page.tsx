@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
-import Carrossel from "./components/Carrossel";
+import Carrossel from "./components/home/Carrossel";
 
 export default function Home() {
   return (

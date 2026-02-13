@@ -1,5 +1,5 @@
 import { Card, CardContent, CardMedia, Box, Typography, Chip, Stack} from '@mui/material'
-import { CharacterApi } from '../types/character';
+import { CharacterApi } from '../../types/character';
 
 const CharacterInfos = ({character} : {character:CharacterApi}) => {
   const statusColor =

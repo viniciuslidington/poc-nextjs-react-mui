@@ -27,7 +27,7 @@ export interface CharacterApi {
   created: string;
 }
 
-export interface ApiResponse {
+export interface ApiResponseCharacter {
   info: {
     count: number;
     pages: number;
