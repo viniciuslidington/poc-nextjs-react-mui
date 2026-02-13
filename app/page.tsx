@@ -40,6 +40,18 @@ export default function Home() {
         <Button variant="contained" color="primary" href="/characters">
           Explore Characters
         </Button>
+        <Typography variant="body1" color="text.secondary">
+          Relive every crazy adventure and iconic moment from the series.
+        </Typography>
+        <Button variant="contained" color="primary" href="/episodes">
+          Explore Episodes
+        </Button>
+        <Typography variant="body1" color="text.secondary">
+          Explore bizarre planets, alternate dimensions, and strange worlds.
+        </Typography>
+        <Button variant="contained" color="primary" href="/locations">
+          Explore Locations
+        </Button>
       </Stack>
     </Stack>
   );

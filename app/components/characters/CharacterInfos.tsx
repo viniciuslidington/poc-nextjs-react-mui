@@ -46,8 +46,7 @@ const CharacterInfos = ({character} : {character:CharacterApi}) => {
             <Typography variant="body2" color="text.secondary">
               <strong>Gênero:</strong> {character.gender}
             </Typography>
-
-            {/* Já que mapeamos Origin e Location, vamos mostrar! */}
+            
             <Typography variant="body2" color="text.secondary" noWrap>
               <strong>Origem:</strong> {character.origin?.name}
             </Typography>
