@@ -2,6 +2,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 import { Container, Stack, Box, Typography, Grid } from '@mui/material';
 import { LocationApiResponse } from '../../types/location';
+import LocationInfos from '../../components/locations/LocationInfo';
 
 async function getLocation() {
   const res = await fetch('https://rickandmortyapi.com/api/location');
@@ -9,7 +10,6 @@ async function getLocation() {
   if(!res.ok){
     throw new Error('Error searching episodes')
   }
-
   return res.json();
 }
 
@@ -33,7 +33,7 @@ async function LocationPage(){
             <Grid 
               key={location.id} 
               size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-               
+              <LocationInfos location={location}/>
             </Grid>
           )}
         </Grid>
