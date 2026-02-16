@@ -1,19 +1,17 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+import axios from "axios";
+import { NextRequest, NextResponse } from "next/server"
 
 import { apiRickAndMorty } from "@/app/lib/axios";
-import { NextRequest, NextResponse } from "next/server";
-import axios from 'axios';
 
-export async function GET(request: NextRequest) {
+export async function GET(request:NextRequest, {params}: {params: Promise<{id:string}>}){
+
+  const {id} = await params;
+
   try{
-    
-    const { searchParams } = new URL(request.url)
-    const params = Object.fromEntries(searchParams.entries());
+    const response = await apiRickAndMorty.get(`/character/${id}`)
 
-    const response = await apiRickAndMorty.get('/character', { params:params});
+    return NextResponse.json(response.data)
 
-    return NextResponse.json(response.data);
-    
   }catch(error){
     console.error('Internal Error', error);
     
