@@ -3,6 +3,26 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { apiRickAndMorty } from "@/app/lib/axios";
 import { extractIdFromUrl } from "@/app/lib/utils";
+import { CharacterApi } from "@/app/types/character";
+
+const mapCharacter = (char: CharacterApi) => ({
+  id: char.id,
+  name: char.name,
+  status: char.status,
+  species: char.species,
+  type: char.type,
+  gender: char.gender,
+  origin: {
+    name: char.origin.name,
+    origin_id: extractIdFromUrl(char.origin.url)
+  },
+  location: {
+    name: char.location.name,
+    location_id: extractIdFromUrl(char.location.url)
+  },
+  image: char.image,
+  episodes: char.episode.map((url: string) => extractIdFromUrl(url))
+});
 
 export async function GET(request:NextRequest, {params}: {params: Promise<{id:string}>}){
 
@@ -13,28 +33,14 @@ export async function GET(request:NextRequest, {params}: {params: Promise<{id:st
 
   try{
     const response = await apiRickAndMorty.get(`/character/${id}`)
-
     const character = response.data;
 
-    const filteredData = {
-      id: character.id,
-      name: character.name,
-      status: character.status,
-      species: character.species,
-      type: character.type,
-      gender: character.gender,
-      origin: {
-        name: character.origin.name,
-        origin_id: extractIdFromUrl(character.origin.url) 
-      },
-      location: {
-        name: character.location.name,
-        location_id: extractIdFromUrl(character.location.url)
-      },
-      image: character.image,
-      episodes: character.episode.map((url: string) => extractIdFromUrl(url))
-    };
+    if (Array.isArray(character)){
+      const filteredData = character.map((char)=> mapCharacter(char));
+      return NextResponse.json(filteredData)
+    }
     
+    const filteredData = mapCharacter(character);
     return NextResponse.json(filteredData)
 
   }catch(error){
