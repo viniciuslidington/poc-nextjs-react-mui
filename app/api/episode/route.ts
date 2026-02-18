@@ -7,10 +7,10 @@ import { extractIdFromUrl } from "@/app/lib/utils";
 import { Episode } from '../../types/episodes';
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const params = Object.fromEntries(searchParams.entries());
-
   try {
+    const { searchParams } = new URL(request.url);
+    const params = Object.fromEntries(searchParams.entries());
+  
     const response = await apiRickAndMorty.get('/episode', { params });
     const { info, results } = response.data;
 
