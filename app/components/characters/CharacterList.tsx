@@ -53,7 +53,7 @@ export default function CharacterList(){
     <Container maxWidth='lg'>
       <Grid container spacing={4}>
         {characters.map((char:CharacterApi)=>(
-          <Grid item xs={12} sm={6} md={4} key={char.id}>
+          <Grid key={char.id} size={{ xs: 12, sm: 6, md: 4 }} >
             <CharacterInfos character={char}/>
           </Grid>
         ))}
@@ -71,7 +71,6 @@ export default function CharacterList(){
       </Box>
     </Container>
   )
-
 
 }
 
