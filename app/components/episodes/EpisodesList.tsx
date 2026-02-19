@@ -65,16 +65,4 @@ export default function EpisodeList(){
       </Box>
     </Container>
   )
-    
-  
-
-
-
-
-
-
-
-
-
-
 } 
