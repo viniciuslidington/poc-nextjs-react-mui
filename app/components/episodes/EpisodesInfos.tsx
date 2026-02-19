@@ -1,4 +1,4 @@
-import { Card, CardContent, Box, Typography, Chip, Stack, Avatar} from '@mui/material'
+import { Card, CardContent, Box, Typography, Stack} from '@mui/material'
 import { Episode } from '../../types/episodes'
 
 const EpisodesInfos = ({episode}:{episode:Episode}) => {

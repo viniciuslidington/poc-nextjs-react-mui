@@ -38,6 +38,7 @@ const CardCharacterCarrossel = ({item}:{item:Character}) => {
           variant="contained"
           color="primary"
           size="large"
+          href="/characters"
         >
           See Details
         </Button>
