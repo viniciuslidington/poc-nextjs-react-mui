@@ -9,55 +9,75 @@ import {
   Container,
   TextField 
 } from '@mui/material';
+import { useRecoilState } from 'recoil';
 import { apiInterna } from '@/app/lib/axios';
 import { CharacterApi } from '@/app/types/character';
 import CharacterInfos from './CharacterInfos';
+import {
+  charactersState,
+  characterPageState,
+  characterNameFilterState,
+  characterTotalPagesState,
+  characterLoadingState
+} from '@/app/store/atomsCharacters';
 
 export default function CharacterList(){
-  const [inputName, setInputName] = useState("")
-  const [name, setName] = useState("")
-  const [characters, setCharacters] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1); 
-  const [loading, setLoading] = useState(true);
+  const [inputName, setInputName] = useState("");
+  
+  // Estados do Recoil
+  const [characters, setCharacters] = useRecoilState(charactersState);
+  const [page, setPage] = useRecoilState(characterPageState);
+  const [name, setName] = useRecoilState(characterNameFilterState);
+  const [totalPages, setTotalPages] = useRecoilState(characterTotalPagesState);
+  const [loading, setLoading] = useRecoilState(characterLoadingState);
 
-  useEffect(()=>{
-    const timer = setTimeout(()=>{
+  // Sincronizar input local com estado Recoil (debounce)
+  useEffect(() => {
+    const timer = setTimeout(() => {
       setName(inputName);
-    }, 500 );
+    }, 500);
 
     return () => clearTimeout(timer);
-  }, [inputName])
+  }, [inputName, setName]);
 
-  useEffect(()=> {
-  const fetchCharacters = async ()=>{
+  // Buscar personagens
+  useEffect(() => {
+    const fetchCharacters = async () => {
       setLoading(true);
-      try{
-        const response = await apiInterna.get('/character',{params:{page:page,name:name}});
+      try {
+        const response = await apiInterna.get('/character', {
+          params: { page, name }
+        });
         const { info, results } = response.data;
 
-        setCharacters(results)
-        setTotalPages(info.pages)
-      }catch(error){
-        console.error('Erro ao buscar personagens: ', error)
-      }finally{
-        setLoading(false)
+        setCharacters(results);
+        setTotalPages(info.pages);
+      } catch (error) {
+        console.error('Erro ao buscar personagens: ', error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchCharacters();
-    },[page, name]);
 
-  // Reseta para página 1 quando o filtro de nome mudar
+    fetchCharacters();
+  }, [page, name, setCharacters, setTotalPages, setLoading]);
+
+  // Reseta para página 1 quando o filtro mudar
   useEffect(() => {
     setPage(1);
+  }, [name, setPage]);
+
+  // Sincronizar inputName com o estado Recoil ao montar o componente
+  useEffect(() => {
+    setInputName(name);
   }, [name]);
   
-  const handleChangePage = (event:React.ChangeEvent<unknown>, value: number)=> {
+  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    window.scrollTo({top:0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return(
+  return (
     <Container maxWidth='lg'>
       <Box sx={{ mb: 4, mt: 2 }}>
         <TextField
@@ -71,17 +91,17 @@ export default function CharacterList(){
       </Box>
 
       {loading ? (
-        <Box sx={{display:'flex', justifyContent:'center', my:10}}>
-          <CircularProgress size={60}/>
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 10 }}>
+          <CircularProgress size={60} />
         </Box>
-      ):(
+      ) : (
         <>
           <Grid container spacing={4}>
-            {characters.map((char:CharacterApi)=>(
-              <Grid key={char.id} size={{ xs: 12, sm: 6, md: 4 }} >
-              <CharacterInfos character={char}/>
+            {characters.map((char: CharacterApi) => (
+              <Grid key={char.id} size={{ xs: 12, sm: 6, md: 4 }}>
+                <CharacterInfos character={char} />
               </Grid>
-               ))}
+            ))}
           </Grid>
            
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8, mb: 4 }}>
@@ -98,8 +118,7 @@ export default function CharacterList(){
         </>
       )}
     </Container>
-  )
-
+  );
 }
 
 

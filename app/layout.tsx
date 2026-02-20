@@ -5,6 +5,7 @@ import "./globals.css";
 import NavBar from "./components/layout/NavBar";
 import Container from "@mui/material/Container";
 import ThemeRegistry from "./components/layout/ThemeRegistry";
+import RecoilProvider from "./components/providers/recoilProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeRegistry>
-          <NavBar/>
-          <Container component="main" sx={{ mt: 5 , mb: 4 }}>
-            {children}
-          </Container>
-        </ThemeRegistry>
+        <RecoilProvider>
+          <ThemeRegistry>
+            <NavBar/>
+            <Container component="main" sx={{ mt: 5 , mb: 4 }}>
+              {children}
+            </Container>
+          </ThemeRegistry>
+        </RecoilProvider>
       </body>
     </html>
   );
