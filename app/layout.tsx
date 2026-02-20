@@ -1,40 +1,35 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-
 import NavBar from "./components/layout/NavBar";
-import Container from "@mui/material/Container";
 import ThemeRegistry from "./components/layout/ThemeRegistry";
+import { Container } from '@mui/material';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const robotoMono = Roboto_Mono({
+  variable: "--font-roboto-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Rick and Morty Characterverse",
-  description: "A Next.js application showcasing characters, episodes, and locations from the Rick and Morty universe.",
+  title: "Rick and Morty App",
+  description: "POC Next.js + React + MUI",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeRegistry>
-          <NavBar/>
-          <Container component="main" sx={{ mt: 5 , mb: 4 }}>
-            {children}
-          </Container>
-        </ThemeRegistry>
+      <body className={`${inter.variable} ${robotoMono.variable}`}>
+          <ThemeRegistry>
+            <NavBar/>
+            <Container component="main" sx={{ mt: 5, mb: 4 }}>
+              {children}
+            </Container>
+          </ThemeRegistry>
       </body>
     </html>
   );

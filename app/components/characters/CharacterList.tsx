@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { 
   Box, 
   Pagination, 
-  Grid, 
   CircularProgress,
   Container,
   TextField 
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { apiInterna } from '@/app/lib/axios';
 import { CharacterApi } from '@/app/types/character';
 import CharacterInfos from './CharacterInfos';
