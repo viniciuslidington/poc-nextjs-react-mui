@@ -27,15 +27,16 @@ const NavBar = () => {
             noWrap
             component="div"
             sx={{ fontWeight: 'bold'}}
+            color='primary'
           >
             Rick and Morty Characterverse
           </Typography>
         </Box>
         <Box sx={{ display:'flex'}}>
-          <Button color="inherit" component={Link} href="/">Home</Button>
-          <Button color="inherit" component={Link} href="/characters">Characters</Button>
-          <Button color="inherit" component={Link} href="/episodes">Episodes</Button>
-          <Button color="inherit" component={Link} href="/locations">Locations</Button>
+          <Button color="primary" component={Link} href="/">Home</Button>
+          <Button color="primary" component={Link} href="/characters">Characters</Button>
+          <Button color="primary" component={Link} href="/episodes">Episodes</Button>
+          <Button color="primary" component={Link} href="/locations">Locations</Button>
         </Box>
         
 

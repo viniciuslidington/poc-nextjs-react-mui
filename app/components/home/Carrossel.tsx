@@ -8,7 +8,6 @@ import { apiInterna } from '@/app/lib/axios';
 import type { CharacterApi } from '../../types/character';
 
 
-
 export function Carrossel() {
   const [character, setCharacter] = useState<CharacterApi[]>([])
 
@@ -28,8 +27,8 @@ export function Carrossel() {
       </Typography>
       <Carousel
         animation='fade'
-        indicators={false}
-        navButtonsAlwaysVisible={true}
+        indicators={true}
+        navButtonsAlwaysVisible={false}
         interval={5000}
       >
         {character.map((character:CharacterApi)=>{

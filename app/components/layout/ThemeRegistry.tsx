@@ -7,7 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 // Recriando seu tema aqui
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
   },
 });
 
