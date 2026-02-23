@@ -27,78 +27,93 @@ export default function CharacterModal(){
     character.status === 'Alive' ? 'success' :
     character.status === 'Dead' ? 'error' : 'default';
 
-    return(
-      <Modal
-        open={!!character}
-        onClose={handleClose}
-        aria-labelledby="character-modal-title">
-      
-        <Box sx={{
-          position:'absolute',
-          top:'50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)', // Centraliza perfeitamente
-          width: { xs: '90%', sm: 600 }, // Responsivo: mobile=90%, desktop=600px
-          maxHeight: '90vh', // Máximo 90% da altura da tela
-          overflow: 'auto', // Scroll se conteúdo for maior que maxHeight
-          bgcolor: 'background.paper', // Cor de fundo do tema
-          borderRadius: 3, // Bordas arredondadas
-          boxShadow: 24, // Sombra para destacar do fundo
+  return(
+    <Modal
+      open={!!character}
+      onClose={handleClose}
+      aria-labelledby="character-modal-title">
+    
+      <Box sx={{
+        position:'absolute',
+        top:'50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: { xs: '95%', sm: 600, md: 700 },
+        maxHeight: '90vh',
+        overflow: 'auto',
+        bgcolor: 'background.paper',
+        borderRadius: 3,
+        boxShadow: 24,
+      }}>
+        
+        <IconButton
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            top: 8, 
+            right: 8, 
+            zIndex: 1,
+            bgcolor: 'rgba(0,0,0,0.6)',
+            color: 'white',
+            '&:hover': { bgcolor: 'rgba(0,0,0,0.8)' }
+          }}
+        >
+          <CloseIcon/>
+        </IconButton>
+
+        
+        <Box sx={{ 
+          position: 'relative', 
+          width: '100%',
+          paddingTop: '100%', 
+          overflow: 'hidden',
         }}>
-          <IconButton
-            onClick={handleClose}
-            sx={{
-              position: 'absolute', // Posicionado sobre a imagem
-              top: 8, 
-              right: 8, 
-              zIndex: 1, // Garante que fica sobre todos os elementos
-              bgcolor: 'rgba(0,0,0,0.6)', // Fundo semi-transparente escuro
-              color: 'white',
-              '&:hover': { bgcolor: 'rgba(0,0,0,0.8)' } // Mais escuro no hover
-            }}
-          >
-            <CloseIcon/>
-          </IconButton>
-          <Box
-            sx={{position: 'relative', width: '100%', height: 350}}
-          >
-            <Image 
-              src={character.image} 
-              alt={character.name} 
+          
+          <Box sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+          }}>
+            <Image
+              src={character.image}
+              alt={character.name}
               fill
-              style={{ objectFit:'cover'}}
+              style={{ objectFit: 'cover' }}
               priority
-               />
+            />
           </Box>
-          <Box sx={{p:3}}>
+        </Box>
+
+        
+        <Box sx={{ p: 3 }}>
           <Box sx={{ 
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
             mb: 2,
-            flexWrap: 'wrap', // Quebra linha em telas pequenas
-            gap: 2 // Espaço entre itens quando quebra linha
+            flexWrap: 'wrap',
+            gap: 2
           }}>
             <Typography 
-              id="character-modal-title" // ID para aria-labelledby
+              id="character-modal-title"
               variant='h4' 
               fontWeight='bold'
-              sx={{ flex: 1 }} // Ocupa espaço disponível
+              sx={{ flex: 1 }}
             >
               {character.name}
             </Typography>
-            
-            {/* Chip indicador de status */}
             <Chip 
               label={character.status} 
-              color={statusColor} // Cor dinâmica baseada no status
+              color={statusColor} 
               variant='filled'
               sx={{ fontWeight: 'bold' }}
             />
           </Box>
 
           <Divider sx={{ my: 2 }} />
-          
+
           <Stack spacing={2}>
             <Box>
               <Typography variant='caption' color='text.secondary'>
@@ -108,7 +123,7 @@ export default function CharacterModal(){
                 {character.species}
               </Typography>
             </Box>
-            
+
             <Box>
               <Typography variant='caption' color='text.secondary'>
                 Gender
@@ -129,36 +144,36 @@ export default function CharacterModal(){
               </Box>
             )}
 
-            <Divider/>
+            <Divider />
 
             <Box>
               <Typography variant='caption' color='text.secondary'>
                 Origin
               </Typography>
               <Typography variant='body1' fontWeight='medium'>
-                {character.origin?.name || 'Unknown'} {/* Fallback se não tiver origem */}
+                {character.origin?.name || 'Unknown'}
               </Typography>
             </Box>
 
-            {/* Campo: Last Known Location */}
             <Box>
               <Typography variant='caption' color='text.secondary'>
                 Last Known Location
               </Typography>
               <Typography variant='body1' fontWeight='medium'>
-                {character.location?.name || 'Unknown'} {/* Fallback se não tiver localização */}
+                {character.location?.name || 'Unknown'}
               </Typography>
             </Box>
 
-            <Box>
-              <Typography variant='caption' color='text.secondary'>
-                Episodes
-              </Typography>
-              <Typography variant='body1' fontWeight='medium'>
-                {character.episode.length} episodes
-              </Typography>
-            </Box>
-            
+            {character.episode && character.episode.length > 0 && (
+              <Box>
+                <Typography variant='caption' color='text.secondary'>
+                  Episodes
+                </Typography>
+                <Typography variant='body1' fontWeight='medium'>
+                  {character.episode.length} episodes
+                </Typography>
+              </Box>
+            )}
           </Stack>
         </Box>
       </Box>
