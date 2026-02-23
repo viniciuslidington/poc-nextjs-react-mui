@@ -12,14 +12,22 @@ import Grid from '@mui/material/Grid2';
 import { apiInterna } from '@/app/lib/axios';
 import { CharacterApi } from '@/app/types/character';
 import CharacterInfos from './CharacterInfos';
+import { characterPageState, characterNameState, selectedCharacterState } from '@/app/stage/atomcharacter';
+import { useRecoilState } from 'recoil';
+
 
 export default function CharacterList(){
   const [inputName, setInputName] = useState("")
-  const [name, setName] = useState("")
   const [characters, setCharacters] = useState([]);
-  const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1); 
   const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useRecoilState(characterPageState);
+  const [name, setName] = useRecoilState(characterNameState);
+  
+  useEffect(()=>{
+    setInputName(name);
+  }, []);
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
@@ -27,13 +35,13 @@ export default function CharacterList(){
     }, 500 );
 
     return () => clearTimeout(timer);
-  }, [inputName])
+  }, [inputName, setName])
 
   useEffect(()=> {
   const fetchCharacters = async ()=>{
       setLoading(true);
       try{
-        const response = await apiInterna.get('/character',{params:{page:page,name:name}});
+        const response = await apiInterna.get('/character',{params:{page:page, name:name}});
         const { info, results } = response.data;
 
         setCharacters(results)
@@ -50,7 +58,7 @@ export default function CharacterList(){
   // Reseta para página 1 quando o filtro de nome mudar
   useEffect(() => {
     setPage(1);
-  }, [name]);
+  }, [name, setPage]);
   
   const handleChangePage = (event:React.ChangeEvent<unknown>, value: number)=> {
     setPage(value);

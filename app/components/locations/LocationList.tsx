@@ -1,7 +1,8 @@
 'use client'
 import { apiInterna } from '@/app/lib/axios';
 import { LocationApi } from '@/app/types/location';
-import { Box, CircularProgress, Container, Grid, Pagination } from '@mui/material';
+import { Box, CircularProgress, Container, Pagination } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import React, { useState, useEffect } from 'react';
 import LocationInfos from './LocationInfo';
 

@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { Box, Container, Grid, CircularProgress, Pagination  } from "@mui/material";
+import { Box, Container, CircularProgress, Pagination  } from "@mui/material";
+import Grid from '@mui/material/Grid2';
 import { apiInterna } from "@/app/lib/axios";
 import type { Episode } from "@/app/types/episodes";
 import EpisodesInfos from './EpisodesInfos';
