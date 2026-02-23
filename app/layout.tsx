@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/layout/NavBar";
 import ThemeRegistry from "./components/layout/ThemeRegistry";
+import RecoilProvider from './providers/recoil';
 import { Container } from '@mui/material';
 
 const inter = Inter({
@@ -24,12 +25,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`${inter.variable} ${robotoMono.variable}`}>
+        <RecoilProvider>
           <ThemeRegistry>
             <NavBar/>
             <Container component="main" sx={{ mt: 5, mb: 4 }}>
               {children}
             </Container>
           </ThemeRegistry>
+        </RecoilProvider>
       </body>
     </html>
   );

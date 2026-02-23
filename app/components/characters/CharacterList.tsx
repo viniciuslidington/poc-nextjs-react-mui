@@ -12,14 +12,28 @@ import Grid from '@mui/material/Grid2';
 import { apiInterna } from '@/app/lib/axios';
 import { CharacterApi } from '@/app/types/character';
 import CharacterInfos from './CharacterInfos';
+import CharacterModal from './CharacterModal';
+import { characterPageState,
+         characterNameState,
+         selectedCharacterState
+       } from '@/app/stage/atomcharacter';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+
 
 export default function CharacterList(){
   const [inputName, setInputName] = useState("")
-  const [name, setName] = useState("")
-  const [characters, setCharacters] = useState([]);
-  const [page, setPage] = useState(1);
+  const [characters, setCharacters] = useState<CharacterApi[]>([]);
   const [totalPages, setTotalPages] = useState(1); 
   const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useRecoilState(characterPageState);
+  const [name, setName] = useRecoilState(characterNameState);
+  const setSelectedCharacter = useSetRecoilState(selectedCharacterState)
+  
+  useEffect(()=>{
+    setInputName(name);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
@@ -27,13 +41,13 @@ export default function CharacterList(){
     }, 500 );
 
     return () => clearTimeout(timer);
-  }, [inputName])
+  }, [inputName, setName])
 
   useEffect(()=> {
   const fetchCharacters = async ()=>{
       setLoading(true);
       try{
-        const response = await apiInterna.get('/character',{params:{page:page,name:name}});
+        const response = await apiInterna.get('/character',{params:{page:page, name:name}});
         const { info, results } = response.data;
 
         setCharacters(results)
@@ -50,11 +64,15 @@ export default function CharacterList(){
   // Reseta para página 1 quando o filtro de nome mudar
   useEffect(() => {
     setPage(1);
-  }, [name]);
+  }, [name, setPage]);
   
   const handleChangePage = (event:React.ChangeEvent<unknown>, value: number)=> {
     setPage(value);
     window.scrollTo({top:0, behavior: 'smooth'});
+  };
+
+  const handleCardClik = (character: CharacterApi) => {
+    setSelectedCharacter(character);
   };
 
   return(
@@ -78,7 +96,12 @@ export default function CharacterList(){
         <>
           <Grid container spacing={4}>
             {characters.map((char:CharacterApi)=>(
-              <Grid key={char.id} size={{ xs: 12, sm: 6, md: 4 }} >
+              <Grid 
+                key={char.id}
+                size={{ xs: 12, sm: 6, md: 4 }}
+                onClick={()=>handleCardClik(char)}  
+                sx={{cursor:'pointer'}}
+              >
               <CharacterInfos character={char}/>
               </Grid>
                ))}
@@ -97,6 +120,8 @@ export default function CharacterList(){
           </Box>
         </>
       )}
+
+      <CharacterModal/>
     </Container>
   )
 
