@@ -12,21 +12,27 @@ import Grid from '@mui/material/Grid2';
 import { apiInterna } from '@/app/lib/axios';
 import { CharacterApi } from '@/app/types/character';
 import CharacterInfos from './CharacterInfos';
-import { characterPageState, characterNameState, selectedCharacterState } from '@/app/stage/atomcharacter';
-import { useRecoilState } from 'recoil';
+import CharacterModal from './CharacterModal';
+import { characterPageState,
+         characterNameState,
+         selectedCharacterState
+       } from '@/app/stage/atomcharacter';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 
 export default function CharacterList(){
   const [inputName, setInputName] = useState("")
-  const [characters, setCharacters] = useState([]);
+  const [characters, setCharacters] = useState<CharacterApi[]>([]);
   const [totalPages, setTotalPages] = useState(1); 
   const [loading, setLoading] = useState(true);
 
   const [page, setPage] = useRecoilState(characterPageState);
   const [name, setName] = useRecoilState(characterNameState);
+  const setSelectedCharacter = useSetRecoilState(selectedCharacterState)
   
   useEffect(()=>{
     setInputName(name);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(()=>{
@@ -65,6 +71,10 @@ export default function CharacterList(){
     window.scrollTo({top:0, behavior: 'smooth'});
   };
 
+  const handleCardClik = (character: CharacterApi) => {
+    setSelectedCharacter(character);
+  };
+
   return(
     <Container maxWidth='lg'>
       <Box sx={{ mb: 4, mt: 2 }}>
@@ -86,7 +96,12 @@ export default function CharacterList(){
         <>
           <Grid container spacing={4}>
             {characters.map((char:CharacterApi)=>(
-              <Grid key={char.id} size={{ xs: 12, sm: 6, md: 4 }} >
+              <Grid 
+                key={char.id}
+                size={{ xs: 12, sm: 6, md: 4 }}
+                onClick={()=>handleCardClik(char)}  
+                sx={{cursor:'pointer'}}
+              >
               <CharacterInfos character={char}/>
               </Grid>
                ))}
@@ -105,6 +120,8 @@ export default function CharacterList(){
           </Box>
         </>
       )}
+
+      <CharacterModal/>
     </Container>
   )
 

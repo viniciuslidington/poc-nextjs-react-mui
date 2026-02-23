@@ -23,7 +23,7 @@ const mapCharacter = (char: CharacterApi) => ({
     location_id: extractIdFromUrl(char.location.url)
   },
   image: char.image,
-  episodes: char.episode.map((url: string) => extractIdFromUrl(url))
+  episode: char.episode.map((url: string) => extractIdFromUrl(url))
 });
 
 export async function GET(request:NextRequest, {params}: {params: Promise<{id:string}>}){

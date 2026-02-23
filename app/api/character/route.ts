@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
           id: extractIdFromUrl(character.location.url)
         },
         image: character.image,
-        episodes: character.episode.map((url: string) => extractIdFromUrl(url))
+        episode: character.episode.map((url: string) => extractIdFromUrl(url))
     }));
 
     return NextResponse.json({info,

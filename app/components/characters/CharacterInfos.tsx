@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Box, Typography, Chip, Stack} from '@mui/material'
+import { Card, CardContent, CardMedia, Box, Typography, Chip} from '@mui/material'
 import { CharacterApi } from '../../types/character';
 
 const CharacterInfos = ({character} : {character:CharacterApi}) => {
@@ -12,7 +12,7 @@ const CharacterInfos = ({character} : {character:CharacterApi}) => {
         height:'100%',
         display:'flex',
         flexDirection:'column',
-        transition:'transform 0.2s',
+        transition:'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
         '&:hover':{
           transform:'scale(1.02)',
           boxShadow: 6,
@@ -24,7 +24,7 @@ const CharacterInfos = ({character} : {character:CharacterApi}) => {
         alt={character.name}
         height='300'
       />
-      <CardContent sx={{ flexGrow:1 }}>
+      <CardContent sx={{ flexGrow: 12 }}>
         <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'start', mb:1}}>
           <Typography variant='h6' component={'h2'} sx={{
             fontWeight:'bold', lineHeight:1.2
@@ -34,27 +34,10 @@ const CharacterInfos = ({character} : {character:CharacterApi}) => {
           <Chip
             label={character.status}
             color={statusColor}
-            size='small'
+            size='medium'
             variant='outlined'
           />
         </Box>
-        <Stack spacing={1}>
-            <Typography variant="body2" color="text.secondary">
-              <strong>Espécie:</strong> {character.species}
-            </Typography>
-            
-            <Typography variant="body2" color="text.secondary">
-              <strong>Gênero:</strong> {character.gender}
-            </Typography>
-            
-            <Typography variant="body2" color="text.secondary" noWrap>
-              <strong>Origem:</strong> {character.origin?.name}
-            </Typography>
-
-            <Typography variant="body2" color="text.secondary" noWrap>
-               <strong>Local Atual:</strong> {character.location?.name}
-            </Typography>
-        </Stack>
       </CardContent>
     </Card>
   )
