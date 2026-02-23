@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { CharacterApi } from '../types/character';
+import { CharacterApiInterna } from '../types/character';
 
 // Estado da página atual
 export const characterPageState = atom<number>({
@@ -14,7 +14,7 @@ export const characterNameState = atom<string>({
 });
 
 // Estado do personagem selecionado (para o modal)
-export const selectedCharacterState = atom<CharacterApi | null>({
+export const selectedCharacterState = atom<CharacterApiInterna | null>({
   key: 'selectedCharacterState',
   default: null,
 });

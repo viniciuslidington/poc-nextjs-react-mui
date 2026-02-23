@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { apiInterna } from '@/app/lib/axios';
-import { CharacterApi } from '@/app/types/character';
+import { ApiInternaResponseCharacter, CharacterApiInterna } from '@/app/types/character';
 import CharacterInfos from './CharacterInfos';
 import CharacterModal from './CharacterModal';
 import { characterPageState,
@@ -22,7 +22,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function CharacterList(){
   const [inputName, setInputName] = useState("")
-  const [characters, setCharacters] = useState<CharacterApi[]>([]);
+  const [characters, setCharacters] = useState<CharacterApiInterna[]>([]);
   const [totalPages, setTotalPages] = useState(1); 
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +47,10 @@ export default function CharacterList(){
   const fetchCharacters = async ()=>{
       setLoading(true);
       try{
-        const response = await apiInterna.get('/character',{params:{page:page, name:name}});
+        const response = await apiInterna.get<ApiInternaResponseCharacter>(
+          '/character',
+          {params:{page:page, name:name}}
+        );
         const { info, results } = response.data;
 
         setCharacters(results)
@@ -71,7 +74,7 @@ export default function CharacterList(){
     window.scrollTo({top:0, behavior: 'smooth'});
   };
 
-  const handleCardClik = (character: CharacterApi) => {
+  const handleCardClik = (character: CharacterApiInterna) => {
     setSelectedCharacter(character);
   };
 
@@ -95,7 +98,7 @@ export default function CharacterList(){
       ):(
         <>
           <Grid container spacing={4}>
-            {characters.map((char:CharacterApi)=>(
+            {characters.map((char:CharacterApiInterna)=>(
               <Grid 
                 key={char.id}
                 size={{ xs: 12, sm: 6, md: 4 }}

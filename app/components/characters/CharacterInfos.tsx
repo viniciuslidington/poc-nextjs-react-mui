@@ -1,7 +1,7 @@
 import { Card, CardContent, CardMedia, Box, Typography, Chip} from '@mui/material'
-import { CharacterApi } from '../../types/character';
+import { CharacterApiInterna } from '../../types/character';
 
-const CharacterInfos = ({character} : {character:CharacterApi}) => {
+const CharacterInfos = ({character} : {character:CharacterApiInterna}) => {
   const statusColor =
     character.status === 'Alive' ? 'success' :
     character.status === 'Dead' ? 'error' : 'default';

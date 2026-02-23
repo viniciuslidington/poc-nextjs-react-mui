@@ -37,33 +37,38 @@ export interface ApiResponseCharacter {
   results: CharacterApi[],
 }
 
-export const mockCharacters: Character[] = [
-  {
-    id: 1,
-    name: "Rick Sanchez",
-    image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-    status: "Alive",
-    species: "Human"
-  },
-  {
-    id: 2,
-    name: "Morty Smith",
-    image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-    status: "Alive",
-    species: "Human"
-  },
-  {
-    id: 3,
-    name: "Summer Smith",
-    image: "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
-    status: "Alive",
-    species: "Human"
-  },
-  {
-    id: 4,
-    name: "Beth Smith",
-    image: "https://rickandmortyapi.com/api/character/avatar/4.jpeg",
-    status: "Alive",
-    species: "Human"
-  }
-];
+export interface CharacterApiInterna {
+  id: number;
+  name: string;
+  status: 'Alive' | 'Dead' | 'unknown'; // Tipos estritos para melhor autocomplete
+  species: string;
+  type: string;
+  gender: 'Male' | 'Female' | 'Genderless' | 'unknown';
+  
+  // Origin com ID numérico (diferente da API original)
+  origin: {
+    name: string;
+    id: number; // ← Mudança: era 'url', agora é 'id'
+  };
+  
+  // Location com ID numérico (diferente da API original)
+  location: {
+    name: string;
+    id: number; // ← Mudança: era 'url', agora é 'id'
+  };
+  
+  image: string;
+  
+  // Episodes como array de IDs (diferente da API original)
+  episodes: number[]; // ← Mudança: era 'episode: string[]', agora é 'episodes: number[]'
+}
+
+export interface ApiInternaResponseCharacter {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+  results: CharacterApiInterna[]; // ← Usa o novo tipo
+}

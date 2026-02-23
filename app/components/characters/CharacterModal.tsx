@@ -164,13 +164,13 @@ export default function CharacterModal(){
               </Typography>
             </Box>
 
-            {character.episode && character.episode.length > 0 && (
+            {character.episodes && character.episodes.length > 0 && (
               <Box>
                 <Typography variant='caption' color='text.secondary'>
                   Episodes
                 </Typography>
                 <Typography variant='body1' fontWeight='medium'>
-                  {character.episode.length} episodes
+                  {character.episodes.length} episodes
                 </Typography>
               </Box>
             )}
