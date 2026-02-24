@@ -1,5 +1,5 @@
 'use client'
-
+import { useEffect, useState } from 'react';
 import {
   Modal,
   Box,
@@ -8,19 +8,68 @@ import {
   Stack,
   IconButton,
   Divider,
+  CircularProgress,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { selectedCharacterState } from '@/app/stage/atomcharacter';
+import EpisodesInfos from '../episodes/EpisodesInfos';
+import { apiInterna } from '@/app/lib/axios';
+import { InternalResponseEp } from '@/app/types/episodes';
+
 
 export default function CharacterModal(){
   const [character, setCharacter] = useRecoilState(selectedCharacterState)
 
+  const [episodes, setEpisodes] = useState<InternalResponseEp[]>([])
+  const [isLoadingEpisodes, setIsLoadingEpisodes] = useState(false)
+
+  // ✅ useEffect ANTES do return
+  useEffect(() => {
+    const fetchEpisodes = async() => {
+      // Guard clause
+      if (!character?.episodes || character.episodes.length === 0) {
+        setEpisodes([]);
+        setIsLoadingEpisodes(false);
+        return;
+      }
+
+      setIsLoadingEpisodes(true)
+
+      try {
+        // ✅ Se episodes já é array de números: [1, 2, 3, 4]
+        // Converte para string separada por vírgula: "1,2,3,4"
+        const episodesNumber = character.episodes.join(',');
+
+        // ✅ Faz a requisição com a string de IDs
+        const response = await apiInterna.get<InternalResponseEp[]>(`/episodes/${episodesNumber}`);
+
+        // ✅ Normaliza a resposta
+        const episodesData = Array.isArray(response.data) 
+          ? response.data 
+          : [response.data];
+
+        setEpisodes(episodesData);
+      } catch (error) {
+        console.error('Error fetching episodes:', error);
+        setEpisodes([]);
+      } finally {
+        // ✅ Sempre desativa loading
+        setIsLoadingEpisodes(false);
+      }
+    };
+
+    fetchEpisodes();
+  }, [character]); // ✅ Refetch quando character muda
+
   const handleClose = () => {
     setCharacter(null);
+    setEpisodes([]); // ✅ Limpa episódios
+    setIsLoadingEpisodes(false); // ✅ Reseta loading
   };
 
+  // ✅ Early return DEPOIS do useEffect
   if (!character) return null
 
   const statusColor =
@@ -61,14 +110,12 @@ export default function CharacterModal(){
           <CloseIcon/>
         </IconButton>
 
-        
         <Box sx={{ 
           position: 'relative', 
           width: '100%',
           paddingTop: '100%', 
           overflow: 'hidden',
         }}>
-          
           <Box sx={{
             position: 'absolute',
             top: 0,
@@ -86,7 +133,6 @@ export default function CharacterModal(){
           </Box>
         </Box>
 
-        
         <Box sx={{ p: 3 }}>
           <Box sx={{ 
             display: 'flex', 
@@ -164,16 +210,57 @@ export default function CharacterModal(){
               </Typography>
             </Box>
 
-            {character.episodes && character.episodes.length > 0 && (
-              <Box>
-                <Typography variant='caption' color='text.secondary'>
-                  Episodes
-                </Typography>
-                <Typography variant='body1' fontWeight='medium'>
-                  {character.episodes.length} episodes
-                </Typography>
-              </Box>
-            )}
+            {/* ✅ SEÇÃO DE EPISÓDIOS COMPLETA */}
+            <Box>
+              <Typography variant='caption' color='text.secondary'>
+                Episodes ({character.episodes?.length || 0})
+              </Typography>
+              
+              {/* ✅ Loading State */}
+              {isLoadingEpisodes ? (
+                <Box sx={{ 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center',
+                  py: 4 
+                }}>
+                  <CircularProgress size={32} />
+                </Box>
+              ) : (
+                /* ✅ Lista de Episódios */
+                <Stack spacing={1} sx={{ 
+                  maxHeight: 300, 
+                  overflow: 'auto',
+                  mt: 1.5,
+                  pr: 1,
+                  '&::-webkit-scrollbar': {
+                    width: '8px',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: 'rgba(0,0,0,0.2)',
+                    borderRadius: '4px',
+                  }
+                }}>
+                  {episodes.length > 0 ? (
+                    episodes.map((episode) => (
+                      <EpisodesInfos 
+                        key={episode.id} 
+                        episode={episode} 
+                      />
+                    ))
+                  ) : (
+                    <Typography 
+                      variant='body2' 
+                      color='text.secondary'
+                      sx={{ py: 3, textAlign: 'center' }}
+                    >
+                      No episodes available
+                    </Typography>
+                  )}
+                </Stack>
+              )}
+            </Box>
+            
           </Stack>
         </Box>
       </Box>
