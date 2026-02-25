@@ -25,10 +25,10 @@ export default function CharacterModal(){
   const [episodes, setEpisodes] = useState<InternalResponseEp[]>([])
   const [isLoadingEpisodes, setIsLoadingEpisodes] = useState(false)
 
-  // ✅ useEffect ANTES do return
+  
   useEffect(() => {
     const fetchEpisodes = async() => {
-      // Guard clause
+      
       if (!character?.episodes || character.episodes.length === 0) {
         setEpisodes([]);
         setIsLoadingEpisodes(false);
@@ -38,14 +38,13 @@ export default function CharacterModal(){
       setIsLoadingEpisodes(true)
 
       try {
-        // ✅ Se episodes já é array de números: [1, 2, 3, 4]
-        // Converte para string separada por vírgula: "1,2,3,4"
+       
         const episodesNumber = character.episodes.join(',');
 
-        // ✅ Faz a requisição com a string de IDs
+
         const response = await apiInterna.get<InternalResponseEp[]>(`/episode/${episodesNumber}`);
 
-        // ✅ Normaliza a resposta
+
         const episodesData = Array.isArray(response.data) 
           ? response.data 
           : [response.data];
@@ -55,21 +54,21 @@ export default function CharacterModal(){
         console.error('Error fetching episodes:', error);
         setEpisodes([]);
       } finally {
-        // ✅ Sempre desativa loading
+
         setIsLoadingEpisodes(false);
       }
     };
 
     fetchEpisodes();
-  }, [character]); // ✅ Refetch quando character muda
+  }, [character]); 
 
   const handleClose = () => {
     setCharacter(null);
-    setEpisodes([]); // ✅ Limpa episódios
-    setIsLoadingEpisodes(false); // ✅ Reseta loading
+    setEpisodes([]); 
+    setIsLoadingEpisodes(false);
   };
 
-  // ✅ Early return DEPOIS do useEffect
+
   if (!character) return null
 
   const statusColor =
