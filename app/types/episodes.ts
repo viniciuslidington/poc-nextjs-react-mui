@@ -22,3 +22,11 @@ export interface ApiResponseEpisodes {
   info: ApiInfo;
   results: Episode[];
 }
+
+export interface InternalResponseEp {
+  id: number,
+  name: string,
+  air_date: string,
+  episode: string,
+  characters: string[]
+}
