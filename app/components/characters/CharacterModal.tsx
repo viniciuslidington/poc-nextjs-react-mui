@@ -228,19 +228,8 @@ export default function CharacterModal(){
                 </Box>
               ) : (
                 /* ✅ Lista de Episódios */
-                <Stack spacing={1} sx={{ 
-                  maxHeight: 300, 
-                  overflow: 'auto',
-                  mt: 1.5,
-                  pr: 1,
-                  '&::-webkit-scrollbar': {
-                    width: '8px',
-                  },
-                  '&::-webkit-scrollbar-thumb': {
-                    backgroundColor: 'rgba(0,0,0,0.2)',
-                    borderRadius: '4px',
-                  }
-                }}>
+                <Stack spacing={1}
+                >
                   {episodes.length > 0 ? (
                     episodes.map((episode) => (
                       <EpisodesInfos 
@@ -260,7 +249,6 @@ export default function CharacterModal(){
                 </Stack>
               )}
             </Box>
-            
           </Stack>
         </Box>
       </Box>
