@@ -1,7 +1,7 @@
 import { Card, CardContent, Box, Typography, Stack} from '@mui/material'
-import { Episode } from '../../types/episodes'
+import { InternalResponseEp } from '../../types/episodes'
 
-const EpisodesInfos = ({episode}:{episode:Episode}) => {
+const EpisodesInfos = ({episode}:{episode:InternalResponseEp}) => {
   return (
     <Card 
       sx={{

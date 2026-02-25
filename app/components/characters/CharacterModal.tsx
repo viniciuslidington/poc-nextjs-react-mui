@@ -43,7 +43,7 @@ export default function CharacterModal(){
         const episodesNumber = character.episodes.join(',');
 
         // ✅ Faz a requisição com a string de IDs
-        const response = await apiInterna.get<InternalResponseEp[]>(`/episodes/${episodesNumber}`);
+        const response = await apiInterna.get<InternalResponseEp[]>(`/episode/${episodesNumber}`);
 
         // ✅ Normaliza a resposta
         const episodesData = Array.isArray(response.data) 
