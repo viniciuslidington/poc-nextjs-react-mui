@@ -18,6 +18,7 @@ import { characterPageState,
          selectedCharacterState
        } from '@/app/stage/atomcharacter';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import axios from 'axios';
 
 
 
@@ -59,10 +60,13 @@ export default function CharacterList(){
         setCharacters(results)
         setTotalPages(info.pages)
       }catch(error){
-        console.error(error)
+        if(axios.isAxiosError(error) && error.response?.status === 404){
+          setErrorMessage("Don't exist characters with this name")
+        }if(axios.isAxiosError(error) && error.response?.status === 500){
+          setErrorMessage("An error occurred while fetching characters")
+        }
         setCharacters([])
         setTotalPages(1)
-        setErrorMessage("Don't exist characters with this name")
 
       }finally{
         setLoading(false)
