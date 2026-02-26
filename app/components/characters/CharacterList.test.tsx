@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import CharacterList from './CharacterList';
 import { RecoilRoot } from 'recoil';
 import { apiInterna } from '@/app/lib/axios';
-import { isAxiosError } from 'axios';
 
 
 jest.mock("@/app/lib/axios", () => ({
