@@ -38,12 +38,8 @@ export default function CharacterModal(){
       setIsLoadingEpisodes(true)
 
       try {
-       
         const episodesNumber = character.episodes.join(',');
-
-
         const response = await apiInterna.get<InternalResponseEp[]>(`/episode/${episodesNumber}`);
-
 
         const episodesData = Array.isArray(response.data) 
           ? response.data 

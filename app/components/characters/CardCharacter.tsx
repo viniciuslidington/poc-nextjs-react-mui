@@ -1,5 +1,3 @@
-'use client'
-
 import { Box, Card, CardMedia, Typography, Button } from "@mui/material"
 import { Character } from "../../types/character"
 
