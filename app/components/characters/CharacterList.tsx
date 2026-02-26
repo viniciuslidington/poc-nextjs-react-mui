@@ -18,6 +18,8 @@ import { characterPageState,
          selectedCharacterState
        } from '@/app/stage/atomcharacter';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import axios from 'axios';
+
 
 
 export default function CharacterList(){
@@ -25,6 +27,7 @@ export default function CharacterList(){
   const [characters, setCharacters] = useState<CharacterApiInterna[]>([]);
   const [totalPages, setTotalPages] = useState(1); 
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const [page, setPage] = useRecoilState(characterPageState);
   const [name, setName] = useRecoilState(characterNameState);
@@ -46,6 +49,7 @@ export default function CharacterList(){
   useEffect(()=> {
   const fetchCharacters = async ()=>{
       setLoading(true);
+      setErrorMessage(null);
       try{
         const response = await apiInterna.get<ApiInternaResponseCharacter>(
           '/character',
@@ -56,7 +60,14 @@ export default function CharacterList(){
         setCharacters(results)
         setTotalPages(info.pages)
       }catch(error){
-        console.error('Erro ao buscar personagens: ', error)
+        if(axios.isAxiosError(error) && error.response?.status === 404){
+          setErrorMessage("Don't exist characters with this name")
+        }if(axios.isAxiosError(error) && error.response?.status === 500){
+          setErrorMessage("An error occurred while fetching characters")
+        }
+        setCharacters([])
+        setTotalPages(1)
+
       }finally{
         setLoading(false)
       }
@@ -64,7 +75,6 @@ export default function CharacterList(){
     fetchCharacters();
     },[page, name]);
 
-  // Reseta para página 1 quando o filtro de nome mudar
   useEffect(() => {
     setPage(1);
   }, [name, setPage]);
@@ -109,21 +119,28 @@ export default function CharacterList(){
               </Grid>
                ))}
           </Grid>
-           
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8, mb: 4 }}>
-            <Pagination
-              count={totalPages}
-              page={page}
-              onChange={handleChangePage}
-              color='primary'
-              size='large'
-              variant='outlined'
-              shape='rounded'
-            />
+
+          {errorMessage && (
+          <Box sx={{ mb: 2, color: "error.main", fontWeight: 600, display:'flex', justifyContent:'center' }}>
+            {errorMessage}
           </Box>
+          )}
+          
+          {!errorMessage && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8, mb: 4 }}>
+              <Pagination
+                count={totalPages}
+                page={page}
+                onChange={handleChangePage}
+                color='primary'
+                size='large'
+                variant='outlined'
+                shape='rounded'
+              />
+            </Box>
+          )}
         </>
       )}
-
       <CharacterModal/>
     </Container>
   )
